@@ -13,9 +13,8 @@ class CourierAssignment extends Model
     protected $table = "courierassignment";
 
     protected $fillable = [
-        'id',
         'orderid',
-        'userid',
+        'courierid',
     ];
 
     public function order(): HasOne
