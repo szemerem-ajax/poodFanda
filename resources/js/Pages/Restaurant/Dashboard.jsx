@@ -1,17 +1,29 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import PaddedSection from '@/Components/PaddedSection';
 import { Head } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import OrdersView from './Partials/OrdersView';
 
 function Section({ children }) {
     return (
-        <PaddedSection className='flex flex-col gap-2 items-center'>
+        <PaddedSection className='flex flex-col gap-2'>
             {children}
         </PaddedSection>
     );
 }
 
 export default function Dashboard({ auth }) {
-    // What to display here?
+    const user = auth.user;
+    const [orders, setOrders] = useState([]);
+
+    useEffect(() => {
+        axios.get(route('orders.index'), {
+            params: {
+                restaurantid: 1 //user.id
+            }
+        }).then(r => setOrders(r.data.data));
+    }, []);
 
     return (
         <AuthenticatedLayout
@@ -24,7 +36,7 @@ export default function Dashboard({ auth }) {
 
             <div className="flex flex-col gap-2 md:grid md:gap-4 md:grid-cols-2">
                 <Section>
-                    Row 1 col 1
+                    <OrdersView title={'Active orders'} orders={orders} />
                 </Section>
                 <Section>
                     Row 1 col 2

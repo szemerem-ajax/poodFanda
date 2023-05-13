@@ -7,7 +7,7 @@ import { Link } from '@inertiajs/react';
 
 const UserLinks = [{ route: '', title: 'Home' }, { route: '/', title: 'My orders' }];
 
-const RestaurantLinks = [{ route: '', title: 'Dashboard' }, { route: '/', title: 'Items' }];
+const RestaurantLinks = [{ route: 'dashboard', title: 'Dashboard' }, { route: 'items', title: 'Items' }];
 
 const CourierLinks = [];
 
@@ -34,7 +34,6 @@ export default function Authenticated({ user, header, children }) {
 
                             <div className="sm:flex sm:gap-6 sm:ml-10">
                                 {LinksMapping[user.type].map((item, index) => {
-                                    console.log(route());
                                     return (
                                     <div key={index} className="hidden space-x-8 sm:flex">
                                         <NavLink href={item.route} active={route().current(item.route)}>
