@@ -5,6 +5,18 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
+const UserLinks = [{ route: '', title: 'Home' }, { route: '/', title: 'My orders' }];
+
+const RestaurantLinks = [{ route: '', title: 'Dashboard' }, { route: '/', title: 'Items' }];
+
+const CourierLinks = [];
+
+const LinksMapping = {
+    user: UserLinks,
+    restaurant: RestaurantLinks,
+    courier: CourierLinks
+};
+
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
@@ -20,10 +32,16 @@ export default function Authenticated({ user, header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
+                            <div className="sm:flex sm:gap-6 sm:ml-10">
+                                {LinksMapping[user.type].map((item, index) => {
+                                    console.log(route());
+                                    return (
+                                    <div key={index} className="hidden space-x-8 sm:flex">
+                                        <NavLink href={item.route} active={route().current(item.route)}>
+                                            {item.title}
+                                        </NavLink>
+                                    </div>
+                                )})}
                             </div>
                         </div>
 
@@ -92,9 +110,11 @@ export default function Authenticated({ user, header, children }) {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
+                        {LinksMapping[user.type].map((item, index) => (
+                            <ResponsiveNavLink key={index} href={item.route} active={route().current(item.route)}>
+                                {item.title}
+                            </ResponsiveNavLink>
+                        ))}
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
@@ -119,7 +139,11 @@ export default function Authenticated({ user, header, children }) {
                 </header>
             )}
 
-            <main>{children}</main>
+            <main className='py-8 px-2 md:px-0'>
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    {children}
+                </div>
+            </main>
         </div>
     );
 }
