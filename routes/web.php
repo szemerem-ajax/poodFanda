@@ -17,28 +17,31 @@ use Inertia\Inertia;
 |
 */
 
-Route::middleware('role:restaurant')->group(function () {
-    Route::get('/', fn() => Inertia::Render('Restaurant/Dashboard'))
-        ->name('dashboard');
-});
-
-Route::middleware('role:courier')->group(function() {
-    Route::get('/', fn() => Inertia::render('Courier/Dashboard'))
-        ->name('dashboard');
-});
-
-Route::middleware('role:user')->group(function() {
-    Route::get('/', fn() => Inertia::render('User/Dashboard'))
-        ->name('dashboard');
-});
-
-Route::get('/', fn (Request $request) =>
+Route::middleware('auth')->get('/dashboard', fn (Request $request) =>
     Inertia::render(match ($request->user()?->type) {
         'user' => 'Dashboard_User',
         'restaurant' => 'Restaurant/Dashboard',
         'courier' => 'Dashboard_Courier',
         default => 'Landing'
     })
+)->name('dashboard');
+
+Route::middleware('role:restaurant')->group(function () {
+    Route::get('/items', fn() => Inertia::Render('Restaurant/Items'))
+        ->name('items');
+});
+
+Route::middleware('role:courier')->group(function() {
+});
+
+Route::middleware('role:user')->group(function() {
+});
+
+Route::get('/', fn (Request $request) =>
+    match ($request->user()) {
+        null => Inertia::render('Landing'),
+        default => redirect('/dashboard')
+    }
 )->name('landing');
 
 // Route::get('/', function () {
