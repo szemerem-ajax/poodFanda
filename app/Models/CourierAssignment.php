@@ -2,28 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CourierAssignment extends Model
 {
-    use HasFactory;
+    protected $table = "courier_assignments";
 
-    protected $table = "courierassignment";
-
-    protected $fillable = [
-        'orderid',
-        'courierid',
-    ];
-
-    public function order(): HasOne
+    public function order(): BelongsTo
     {
-        return $this->hasOne(Order::class, 'orderid');
+        return $this->belongsTo(Order::class, 'orderid', 'id');
     }
 
-    public function courier(): HasOne
+    public function courier(): BelongsTo
     {
-        return $this->hasOne(User::class, 'courierid');
+        return $this->belongsTo(User::class, 'courierid', 'id');
     }
 }
