@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FoodsResource;
 use App\Models\Food;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class FoodController extends Controller
 {
@@ -24,9 +22,8 @@ class FoodController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
-        Gate::authorize('create', $user);
         $food = Food::create($request->all());
 
         return new FoodsResource($food);
@@ -43,9 +40,8 @@ class FoodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Food $food, User $user)
+    public function update(Request $request, Food $food)
     {
-        Gate::authorize('update', $user);
         $food->update($request->all());
         return new FoodsResource($food);
     }
@@ -53,9 +49,8 @@ class FoodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Food $food, User $user)
+    public function destroy(Request $request, Food $food)
     {
-        Gate::authorize('delete', $user);
         Food::destroy($food->id);
     }
 }
