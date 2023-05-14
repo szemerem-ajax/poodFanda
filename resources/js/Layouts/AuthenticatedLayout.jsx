@@ -5,7 +5,7 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
-const UserLinks = [{ route: '', title: 'Home' }, { route: '/', title: 'My orders' }];
+const UserLinks = [{ route: 'dashboard', title: 'Dashboard' }, { route: '/', title: 'My orders' }];
 
 const RestaurantLinks = [{ route: 'dashboard', title: 'Dashboard' }, { route: 'items', title: 'Items' }];
 

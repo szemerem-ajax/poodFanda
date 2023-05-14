@@ -44,7 +44,7 @@ class OrderController extends Controller
     {
         $order = Order::create([
             'userid' => $request['userid'],
-            'status' => $request['status'],
+            'status' => 'unpaid',
         ]);
 
         $order->save();
@@ -57,10 +57,8 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Order $order)
     {
-        $order = Order::find($request->query('id'));
-
         return new OrdersResource($order);
     }
 
@@ -76,8 +74,8 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy(Order $order)
     {
-        Order::destroy($request->query('id'));
+        $order->delete();
     }
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Modal from '@/Components/Modal';
 import Item from './Partials/ItemView';
 import NewItemView from './Partials/NewItemView';
+import { Head } from '@inertiajs/react';
 
 export default function Items({ auth }) {
     const user = auth.user;
@@ -24,6 +25,8 @@ export default function Items({ auth }) {
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Items</h2>}
         >
+            <Head title='Items' />
+
             <div className='flex flex-col gap-4 items-center'>
                 <Modal show={adding} onClose={() => setAdding(false)}>
                     <NewItemView auth={auth} onFinish={() => setAdding(false)} />

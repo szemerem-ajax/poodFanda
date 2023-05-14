@@ -15,7 +15,7 @@ class FoodController extends Controller
     public function index()
     {
         $foods = Food::all()
-            ->load(['categories']);
+            ->load(['restaurant']);
 
         return FoodsResource::collection($foods);
     }

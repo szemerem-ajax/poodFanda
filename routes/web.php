@@ -19,7 +19,7 @@ use Inertia\Inertia;
 
 Route::middleware('auth')->get('/dashboard', fn (Request $request) =>
     Inertia::render(match ($request->user()?->type) {
-        'user' => 'Dashboard_User',
+        'user' => 'Customer/Dashboard',
         'restaurant' => 'Restaurant/Dashboard',
         'courier' => 'Dashboard_Courier',
         default => 'Landing'
