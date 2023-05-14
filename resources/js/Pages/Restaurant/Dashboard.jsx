@@ -20,7 +20,7 @@ export default function Dashboard({ auth }) {
     useEffect(() => {
         axios.get(route('orders.index'), {
             params: {
-                restaurantid: 1 //user.id
+                restaurantid: user.id
             }
         }).then(r => setOrders(r.data.data));
     }, []);
@@ -36,16 +36,16 @@ export default function Dashboard({ auth }) {
 
             <div className="flex flex-col gap-2 md:grid md:gap-4 md:grid-cols-2">
                 <Section>
-                    <OrdersView title={'Active orders'} orders={orders} />
+                    <OrdersView title={'Active orders'} orders={orders.filter(o => o[0].status === 'cooking')} />
                 </Section>
                 <Section>
-                    Row 1 col 2
+                    <OrdersView title={'Paid orders'} orders={orders.filter(o => o[0].status === 'paid')} />
                 </Section>
                 <Section>
-                    Row 2 col 1
+                    <OrdersView title={'Unpaid orders'} orders={orders.filter(o => o[0].status === 'unpaid')} />
                 </Section>
                 <Section>
-                    Row 2 col 2
+                    <OrdersView title={'Finished orders'} orders={orders.filter(o => o[0].status === 'ready')} />
                 </Section>
             </div>
         </AuthenticatedLayout>

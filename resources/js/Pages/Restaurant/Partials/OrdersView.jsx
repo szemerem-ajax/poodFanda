@@ -19,29 +19,28 @@ function Order({ order }) {
                 </div>
             ))}
             <div className="col-span-2 my-2 w-full h-[1px] border-y border-indigo-700"></div>
-            <label>Grand total:</label>
+            <label>Total:</label>
             <p>{order.reduce((acc, curr) => acc + curr.price, 0)}</p>
         </div>
     );
 }
 
 export default function Orders({ title, orders }) {
-    if (orders.length === 0) {
-        return (
-            <em className="text-xl font-medium">No orders for now</em>
-        );
-    }
-
     return (
         <div className="flex flex-col gap-2">
             <h1 className='text-xl underline underline-offset-4 font-medium'>{title}</h1>
-            <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
-                {orders.map((order, index) => (
-                    <li key={index}>
-                        <Order order={order} />
-                    </li>
-                ))}
-            </ul>
+            {orders.length
+                ? (
+                    <ul className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2">
+                        {orders.map((order, index) => (
+                            <li key={index}>
+                                <Order order={order} />
+                            </li>
+                        ))}
+                    </ul>)
+                : (
+                    <em className="dark:text-gray-400 text-gray-600 font-medium">No orders for now</em>
+                )}
         </div>
     );
 }

@@ -14,7 +14,8 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $foods = Food::all();
+        $foods = Food::all()
+            ->load(['categories']);
 
         return FoodsResource::collection($foods);
     }
@@ -49,7 +50,7 @@ class FoodController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Food $food)
+    public function destroy(Food $food)
     {
         Food::destroy($food->id);
     }

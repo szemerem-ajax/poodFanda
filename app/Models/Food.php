@@ -13,7 +13,8 @@ class Food extends Model
     protected $fillable = [
         'name',
         'description',
-        'price'
+        'price',
+        'restaurantid'
     ];
 
     public function restaurant(): BelongsTo

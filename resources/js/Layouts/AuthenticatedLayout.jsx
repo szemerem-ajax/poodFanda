@@ -139,7 +139,7 @@ export default function Authenticated({ user, header, children }) {
             )}
 
             <main className='py-8 px-2 md:px-0'>
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 text-gray-900 dark:text-gray-100">
                     {children}
                 </div>
             </main>
