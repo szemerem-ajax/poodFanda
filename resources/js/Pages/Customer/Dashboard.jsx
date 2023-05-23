@@ -1,9 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import FoodView from './Partials/FoodView';
+import Basket from './Partials/Basket';
+
+export const BasketContext = createContext([null, null]);
 
 export default function Dashboard({ auth }) {
+    const [basket, setBasket] = useState([]);
     const [foods, setFoods] = useState([]);
 
     useEffect(() => {
@@ -20,9 +24,13 @@ export default function Dashboard({ auth }) {
 
             <h1 className='text-2xl font-semibold mb-8'>Welcome to poodFanda {auth.user.name}!</h1>
 
-            <div className="flex flex-nowrap overflow-x-scroll md:overflow-hidden md:flex-wrap gap-2">
-                {foods.map((food, index) => <FoodView key={index} auth={auth} food={food} />)}
-            </div>
+            <BasketContext.Provider value={[basket, setBasket]}>
+                <div className="flex flex-nowrap overflow-x-scroll md:overflow-hidden md:flex-wrap gap-2">
+                    {foods.map((food, index) => <FoodView key={index} auth={auth} food={food} />)}
+                </div>
+
+                <Basket auth={auth} />
+            </BasketContext.Provider>
         </AuthenticatedLayout>
     );
 }
