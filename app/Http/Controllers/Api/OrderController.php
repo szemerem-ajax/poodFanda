@@ -20,15 +20,19 @@ class OrderController extends Controller
 
         if ($userid !== null)
         {
-            return OrdersResource::collection(Order::where('userid', '=', $userid));
+            return OrdersResource::collection(
+                Order::where('userid', '=', $userid)
+                    ->get()
+                    ->load(['foods'])
+                    ->where('foods.restaurantid', '=', $restaurantid)
+            );
         }
         else if ($restaurantid !== null)
         {
             return OrdersResource::collection(
                 Order::query()
-                    ->joinWhere('foods', 'restaurantid', '=', $restaurantid)
                     ->get()
-                    ->groupBy(fn ($thing) => $thing->id)
+                    ->load(['foods'])
             );
         }
         else
@@ -44,10 +48,13 @@ class OrderController extends Controller
     {
         $order = Order::create([
             'userid' => $request['userid'],
-            'status' => 'unpaid',
+            'status' => 'cooking',
         ]);
 
         $order->save();
+        foreach ($request['foods'] as $foodid) {
+            $order->foods()->attach($foodid);
+        }
         $order->update($request->all());
         $order->save();
 

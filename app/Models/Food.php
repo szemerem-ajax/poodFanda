@@ -14,6 +14,7 @@ class Food extends Model
         'name',
         'description',
         'price',
+        'image_url',
         'restaurantid'
     ];
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('userid')->constrained('users');
-            $table->enum('status', ['unpaid', 'paid', 'cooking', 'ready', 'enroute', 'delivered'])->default('unpaid');
+            $table->enum('status', ['cooking', 'ready', 'enroute', 'delivered'])->default('cooking');
             $table->timestamps();
         });
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('restaurantid')->constrained('users')->onDelete('cascade');
             $table->string('name');
+            $table->string('image_url');
             $table->string('description')->default('No description provided.');
             $table->integer('price');
             $table->timestamps();
