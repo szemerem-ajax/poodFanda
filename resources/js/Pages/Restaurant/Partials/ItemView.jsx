@@ -3,23 +3,23 @@ import PaddedSection from '@/Components/PaddedSection';
 import { useForm } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
-async function deleteItem(item) {
-    if (!confirm(`Are you sure you want to delete ${item.name}?`))
-        return;
-
-    await axios.delete(route('foods.destroy', {
-        food: item
-    }), item);
-    location.reload();
-}
-
-export default function Item({ item }) {
+export default function Item({ item, onDidChange }) {
     const [editing, setEditing] = useState(false);
+
+    async function deleteItem(item) {
+        if (!confirm(`Are you sure you want to delete ${item.name}?`))
+            return;
+
+        await axios.delete(route('foods.destroy', {
+            food: item
+        }), item);
+        onDidChange();
+    }
 
     return (
         <>
             <Modal show={editing} onClose={() => setEditing(false)}>
-                <EditItem item={item} onCancel={() => setEditing(false)} />
+                <EditItem item={item} onCancel={() => setEditing(false)} onDidChange={onDidChange} />
             </Modal>
             <PaddedSection className='flex flex-col gap-2 p-1'>
                 <h1 className='text-lg font-semibold'>{item.name}</h1>
@@ -37,7 +37,7 @@ export default function Item({ item }) {
         </>
     );
 }
-function EditItem({ item, onCancel }) {
+function EditItem({ item, onCancel, onDidChange }) {
     const { data, setData, processing, errors, reset } = useForm({
         name: '',
         description: '',
@@ -53,7 +53,8 @@ function EditItem({ item, onCancel }) {
         e.preventDefault();
 
         await axios.put(route('foods.update', data), data);
-        location.reload();
+        onDidChange();
+        onCancel();
     };
 
     // async function submit() {

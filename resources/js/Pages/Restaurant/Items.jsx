@@ -9,7 +9,12 @@ import { Head } from '@inertiajs/react';
 export default function Items({ auth }) {
     const user = auth.user;
     const [foods, setFoods] = useState([]);
+    const [change, setChange] = useState(false);
     const [adding, setAdding] = useState(false);
+
+    useEffect(() => {
+        setChange(p => !p);
+    }, [adding]);
 
     useEffect(() => {
         axios.get(route('foods.index'))
@@ -18,7 +23,7 @@ export default function Items({ auth }) {
                     .filter(f => f.restaurantid === user.id)
                 )
             );
-    }, []);
+    }, [change]);
 
     return (
         <AuthenticatedLayout
@@ -33,7 +38,7 @@ export default function Items({ auth }) {
                 </Modal>
                 <div className="w-full flex flex-wrap items-center gap-2">
                     {foods.length === 0 && <em className='text-xl'>No foods</em>}
-                    {foods.map((food, index) => <Item key={index} item={food} />)}
+                    {foods.map((food, index) => <Item key={index} item={food} onDidChange={() => setChange(p => !p)} />)}
                 </div>
                 <button onClick={() => setAdding(true)} className='border border-indigo-500 text-indigo-500 py-0.5 px-3 hover:bg-indigo-500 hover:text-gray-200 rounded-sm transition-colors'>Create new food</button>
             </div>

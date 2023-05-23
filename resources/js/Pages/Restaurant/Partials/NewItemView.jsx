@@ -14,7 +14,7 @@ export default function NewItemView({ auth, onFinish }) {
             ...data,
             restaurantid: auth.user.id
         }));
-        location.reload();
+        onFinish();
     };
 
     return (

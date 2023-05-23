@@ -6,21 +6,21 @@ function Order({ order }) {
 
     return (
         <div className="grid grid-cols-2 gap-x-0.5 p-2 place-items-center border-indigo-600 border-2 rounded-lg">
-            <h2 className="col-span-2 text-center">Order #{order[0].id}</h2>
+            <h2 className="col-span-2 text-center">Order #{order.id}</h2>
             <label>Date:</label>
-            <p>{formatter.format(new Date(order[0].created_at))}</p>
+            <p>{formatter.format(new Date(order.created_at))}</p>
             <label>Status:</label>
-            <em>{order[0].status}</em>
+            <em>{order.status}</em>
             <div className="col-span-2 my-2 w-full h-[1px] border-y border-indigo-700"></div>
-            {order.map((item, index) => (
-                <div key={index} className="col-span-2 w-full flex px-1 text-sm justify-between">
-                    <label>{item.name}</label>
-                    <p>{item.price}</p>
-                </div>
-            ))}
+                {order.foods.map((item, index) => (
+                    <div key={index} className="col-span-2 w-full flex px-1 text-sm justify-between">
+                        <label>{item.name}</label>
+                        <p>{item.price}</p>
+                    </div>
+                ))}
             <div className="col-span-2 my-2 w-full h-[1px] border-y border-indigo-700"></div>
             <label>Total:</label>
-            <p>{order.reduce((acc, curr) => acc + curr.price, 0)}</p>
+            <p>{order.foods.reduce((acc, curr) => acc + curr.price, 0)}</p>
         </div>
     );
 }

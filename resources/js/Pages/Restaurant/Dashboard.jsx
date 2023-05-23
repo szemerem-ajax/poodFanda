@@ -36,16 +36,16 @@ export default function Dashboard({ auth }) {
 
             <div className="flex flex-col gap-2 md:grid md:gap-4 md:grid-cols-2">
                 <Section>
-                    <OrdersView title={'Active orders'} orders={orders.filter(o => o[0].status === 'cooking')} />
+                    <OrdersView title={'Active orders'} orders={orders.filter(o => o.status === 'cooking')} />
                 </Section>
                 <Section>
-                    <OrdersView title={'Paid orders'} orders={orders.filter(o => o[0].status === 'paid')} />
+                    <OrdersView title={'Paid orders'} orders={orders.filter(o => o.status === 'paid')} />
                 </Section>
                 <Section>
-                    <OrdersView title={'Unpaid orders'} orders={orders.filter(o => o[0].status === 'unpaid')} />
+                    <OrdersView title={'Unpaid orders'} orders={orders.filter(o => o.status === 'unpaid')} />
                 </Section>
                 <Section>
-                    <OrdersView title={'Finished orders'} orders={orders.filter(o => o[0].status === 'ready')} />
+                    <OrdersView title={'Finished orders'} orders={orders.filter(o => o.status === 'ready')} />
                 </Section>
             </div>
         </AuthenticatedLayout>
