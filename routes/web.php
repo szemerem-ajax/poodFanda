@@ -35,6 +35,8 @@ Route::middleware('role:courier')->group(function() {
 });
 
 Route::middleware('role:user')->group(function() {
+    Route::get('/myorders', fn () => Inertia::render('Customer/MyOrders'))
+        ->name('myorders');
 });
 
 Route::get('/', fn (Request $request) =>
