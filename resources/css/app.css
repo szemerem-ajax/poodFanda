@@ -7,3 +7,17 @@
 *::after {
     font-family: 'Quicksand', sans-serif;
 }
+
+th,
+td {
+    @apply border border-gray-600 py-1 px-2;
+}
+
+th,
+tr:nth-child(odd) {
+    @apply bg-indigo-950;
+}
+
+tr:nth-child(odd) {
+    @apply bg-gray-800;
+}
