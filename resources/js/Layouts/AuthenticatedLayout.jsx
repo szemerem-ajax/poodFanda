@@ -5,6 +5,8 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
+const AdminLinks = [{ route: 'dashboard', title: 'Admin dashboard '}];
+
 const UserLinks = [{ route: 'dashboard', title: 'Dashboard' }, { route: 'myorders', title: 'My orders' }];
 
 const RestaurantLinks = [{ route: 'dashboard', title: 'Dashboard' }, { route: 'items', title: 'Items' }];
@@ -12,6 +14,7 @@ const RestaurantLinks = [{ route: 'dashboard', title: 'Dashboard' }, { route: 'i
 const CourierLinks = [];
 
 const LinksMapping = {
+    admin: AdminLinks,
     user: UserLinks,
     restaurant: RestaurantLinks,
     courier: CourierLinks
