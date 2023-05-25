@@ -1,5 +1,6 @@
 import Modal from '@/Components/Modal';
 import PaddedSection from '@/Components/PaddedSection';
+import Select from 'react-select';
 import { useForm } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
@@ -38,22 +39,38 @@ export default function Item({ item, onDidChange }) {
     );
 }
 function EditItem({ item, onCancel, onDidChange }) {
+    const [categories, setCategories] = useState([]);
     const { data, setData, processing, errors, reset } = useForm({
         name: '',
         description: '',
         image_url: '',
         price: '',
+        categories: [],
     });
 
     useEffect(() => {
-        setData(item);
+        setData({
+            ...item,
+            categories: item.categories.map(c => ({ label: c.name, value: c.id }))
+        });
         return () => reset('name', 'description', 'price');
+    }, [item]);
+
+    useEffect(() => {
+        axios.get(route('categories.index'))
+            .then(r => setCategories(r.data.data.map(c => ({ label: c.name, value: c.id }))))
     }, []);
+
+    console.log(categories)
 
     const submit = async (e) => {
         e.preventDefault();
 
-        await axios.put(route('foods.update', data), data);
+        const obj = {
+            ...data,
+            categories: data.categories.map(c => ({ id: c.value }))
+        }
+        await axios.put(route('foods.update', item.id), obj);
         onDidChange();
         onCancel();
     };
@@ -72,8 +89,17 @@ function EditItem({ item, onCancel, onDidChange }) {
             <input id='description' type="text" required value={data.description} onChange={e => setData('description', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
             <label htmlFor='image_url'>Image URL:</label>
             <input id='image_url' type="text" value={data.image_url} onChange={e => setData('image_url', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
-            <label htmlFor='price'>Price:</label>
+            <label htmlFor='price'>Price (ft):</label>
             <input id='price' type="number" required value={data.price} onChange={e => setData('price', parseInt(e.target.value))} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' min={1} />
+            <label htmlFor="categories">Categories</label>
+            <Select
+                id="categories"
+                isMulti
+                value={data.categories}
+                options={categories}
+                className='text-gray-900'
+                onChange={e => setData('categories', e)}
+            />
             <button type='submit' className='border border-indigo-500 text-indigo-500 py-0.5 px-3 hover:bg-indigo-500 hover:text-gray-200 rounded-sm transition-colors'>Save</button>
             <button onClick={onCancel} className='border border-rose-600 text-rose-600 py-0.5 px-3 hover:bg-rose-600 hover:text-gray-200 rounded-sm transition-colors'>Cancel</button>
         </form>

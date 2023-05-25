@@ -16,6 +16,12 @@ export default function FoodView({ auth, food }) {
             <PaddedSection className='flex flex-col'>
                 <h2 className="text-xl">{food.name}</h2>
                 <h3 className="text-gray-400">{food.restaurant.name}</h3>
+                <ul className="flex gap-1 my-1">
+                    {food.categories.map((cat, index) =>
+                        <li key={index} className="bg-gray-100 text-gray-800 text-sm px-1 py-0.5 rounded-lg">
+                            {cat.name}
+                        </li>)}
+                </ul>
                 <img className="w-80 h-56 my-2 object-cover object-center" src={food.image_url ?? PlaceHolderUrl} />
                 <button onClick={order} className="bg-indigo-500 rounded-md">Order this!</button>
             </PaddedSection>
