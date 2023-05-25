@@ -37,6 +37,7 @@ class FoodController extends Controller
         {
             $food->categories()->attach($cat);
         }
+        $food->save();
 
         return new JsonResource($food);
     }
@@ -60,11 +61,12 @@ class FoodController extends Controller
         $food->price = $request->price;
         $food->image_url = $request->image_url;
 
-        $food->categories()->delete();
+        $food->categories()->detach();
         foreach ($request['categories'] as $cat)
         {
             $food->categories()->attach($cat);
         }
+        $food->save();
 
         return new JsonResource($food);
     }
