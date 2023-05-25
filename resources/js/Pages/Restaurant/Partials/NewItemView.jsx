@@ -4,6 +4,7 @@ export default function NewItemView({ auth, onFinish }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         description: '',
+        image_url: null,
         price: '',
     });
 
@@ -26,6 +27,8 @@ export default function NewItemView({ auth, onFinish }) {
                 <input id='name' type="text" required value={data.name} onChange={e => setData('name', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
                 <label htmlFor="description">Description:</label>
                 <input id='description' type="text" required value={data.description} onChange={e => setData('description', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
+                <label htmlFor='image_url'>Image URL:</label>
+                <input id='image_url' type="text" value={data.image_url} onChange={e => setData('image_url', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
                 <label htmlFor="price">Price:</label>
                 <input id='price' type="number" required value={data.price} onChange={e => setData('price', parseInt(e.target.value))} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' min={1} />
                 <button type="submit" className='mt-4 border border-indigo-500 text-indigo-500 py-0.5 px-3 hover:bg-indigo-500 hover:text-gray-200 rounded-sm transition-colors'>Save</button>

@@ -27,7 +27,7 @@ export default function MyOrders({ auth }) {
             <h1 className='text-2xl font-semibold mb-8'>Orders</h1>
 
             <div className="flex flex-wrap gap-2">
-                {orders.map((order, index) => <OrderView key={index} order={order} />)}
+                {orders.reverse().map((order, index) => <OrderView key={index} order={order} />)}
             </div>
         </AuthenticatedLayout>
     );

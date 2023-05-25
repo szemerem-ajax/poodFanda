@@ -40,7 +40,7 @@ export default function Items({ auth }) {
                     {foods.length === 0 && <em className='text-xl'>No foods</em>}
                     {foods.map((food, index) => <Item key={index} item={food} onDidChange={() => setChange(p => !p)} />)}
                 </div>
-                <button onClick={() => setAdding(true)} className='border border-indigo-500 text-indigo-500 py-0.5 px-3 hover:bg-indigo-500 hover:text-gray-200 rounded-sm transition-colors'>Create new food</button>
+                <button onClick={() => setAdding(true)} className='bg-indigo-500 text-gray-200 py-0.5 px-3 hover:bg-indigo-700 rounded-sm transition-colors'>Create new food</button>
             </div>
         </AuthenticatedLayout>
     );
