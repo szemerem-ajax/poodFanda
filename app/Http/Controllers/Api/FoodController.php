@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\FoodsResource;
 use App\Models\Food;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class FoodController extends Controller
 {
@@ -15,9 +15,9 @@ class FoodController extends Controller
     public function index()
     {
         $foods = Food::all()
-            ->load(['restaurant']);
+            ->load(['restaurant', 'categories']);
 
-        return FoodsResource::collection($foods);
+        return JsonResource::collection($foods);
     }
 
     /**
@@ -25,9 +25,20 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        $food = Food::create($request->all());
+        $food = Food::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'image_url' => $request->image_url,
+            'restaurantid' => $request->query('restaurantid')
+        ]);
 
-        return new FoodsResource($food);
+        foreach ($request['categories'] as $cat)
+        {
+            $food->categories()->attach($cat);
+        }
+
+        return new JsonResource($food);
     }
 
     /**
@@ -35,7 +46,7 @@ class FoodController extends Controller
      */
     public function show(Food $food)
     {
-        return new FoodsResource($food);
+        return new JsonResource($food);
     }
 
     /**
@@ -43,8 +54,19 @@ class FoodController extends Controller
      */
     public function update(Request $request, Food $food)
     {
-        $food->update($request->all());
-        return new FoodsResource($food);
+        // $food->update($request->all());
+        $food->name = $request->name;
+        $food->description = $request->description;
+        $food->price = $request->price;
+        $food->image_url = $request->image_url;
+
+        $food->categories()->delete();
+        foreach ($request['categories'] as $cat)
+        {
+            $food->categories()->attach($cat);
+        }
+
+        return new JsonResource($food);
     }
 
     /**

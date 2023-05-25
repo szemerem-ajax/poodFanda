@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrdersResource;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderController extends Controller
 {
@@ -20,7 +20,7 @@ class OrderController extends Controller
 
         if ($userid !== null)
         {
-            return OrdersResource::collection(
+            return JsonResource::collection(
                 Order::where('userid', '=', $userid)
                     ->get()
                     ->load(['foods'])
@@ -29,7 +29,7 @@ class OrderController extends Controller
         }
         else if ($restaurantid !== null)
         {
-            return OrdersResource::collection(
+            return JsonResource::collection(
                 Order::query()
                     ->get()
                     ->load(['foods'])
@@ -37,7 +37,7 @@ class OrderController extends Controller
         }
         else
         {
-            return new OrdersResource([]);
+            return new JsonResource([]);
         }
     }
 
@@ -48,7 +48,7 @@ class OrderController extends Controller
     {
         $order = Order::create([
             'userid' => $request['userid'],
-            'status' => 'cooking',
+            'status' => 'placed',
         ]);
 
         $order->save();
@@ -58,7 +58,7 @@ class OrderController extends Controller
         $order->update($request->all());
         $order->save();
 
-        return new OrdersResource($order);
+        return new JsonResource($order);
     }
 
     /**
@@ -66,7 +66,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return new OrdersResource($order);
+        return new JsonResource($order);
     }
 
     /**
@@ -75,7 +75,7 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $order->update($request->all());
-        return new OrdersResource($order);
+        return new JsonResource($order);
     }
 
     /**

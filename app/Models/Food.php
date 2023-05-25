@@ -15,7 +15,8 @@ class Food extends Model
         'description',
         'price',
         'image_url',
-        'restaurantid'
+        'restaurantid',
+        'categories'
     ];
 
     public function restaurant(): BelongsTo
@@ -25,6 +26,6 @@ class Food extends Model
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'foodscategories', 'foodid', 'categoryid');
+        return $this->belongsToMany(Category::class);
     }
 }
