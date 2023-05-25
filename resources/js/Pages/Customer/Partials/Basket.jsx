@@ -1,9 +1,16 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { BasketContext } from "../Dashboard";
 
 export default function Basket({ auth }) {
     const [basket, setBasket] = useContext(BasketContext);
+    const [niceBasket, setNiceBasket] = useState({});
     const visible = basket.length > 0;
+
+    const groupBy = (x,f)=>x.reduce((a,b,i)=>((a[f(b,i,x)]||=[]).push(b),a),{});
+
+    useEffect(() => {
+        setNiceBasket(groupBy(basket, i => i.id));
+    }, [basket]);
 
     async function order() {
         const foods = basket.map(f => ({ id: f.id }));
@@ -19,7 +26,8 @@ export default function Basket({ auth }) {
         setBasket([]);
     }
 
-    function removeItem(index) {
+    function removeItem(id) {
+        const index = basket.findIndex(i => i.id == id);
         setBasket(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
     }
 
@@ -28,13 +36,14 @@ export default function Basket({ auth }) {
             <div className="bg-indigo-950 border border-gray-400 border-b-0 p-2 px-4 rounded-t-md min-w-[200px] md:min-w-[300px]">
                 <h1 className="text-center text-xl font-medium text-gray-200">Basket</h1>
                 <div className="flex flex-col items-center p-2">
-                    {basket.map((food, index) =>
+                    {Object.keys(niceBasket).map((key, index) =>
                         <div key={index} className="flex items-baseline w-full justify-between">
                             <div className="flex gap-1">
-                                <button className="text-rose-600 transition-colors hover:text-rose-500" onClick={() => removeItem(index)}>&#x2717;</button>
-                                <span>{food.name}</span>
+                                <button className="text-rose-600 transition-colors hover:text-rose-500" onClick={() => removeItem(key)}>&#x2717;</button>
+                                <span>{niceBasket[key][0].name}</span>
+                                <span>x{niceBasket[key].length}</span>
                             </div>
-                            <span className="text-right font-mono text-sm">{food.price}</span>
+                            <span className="text-right font-mono text-sm">{niceBasket[key][0].price * niceBasket[key].length}</span>
                         </div>
                     )}
                 </div>
