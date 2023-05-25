@@ -1,20 +1,34 @@
+import Select from 'react-select';
 import { useForm } from "@inertiajs/react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function NewItemView({ auth, onFinish }) {
+    const [categories, setCategories] = useState([]);
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         description: '',
-        image_url: null,
+        image_url: '',
         price: '',
+        categories: []
     });
+
+    useEffect(() => {
+        axios.get(route('categories.index'))
+            .then(r => setCategories(r.data.data.map(c => ({ label: c.name, value: c.id }))))
+    }, []);
 
     const submit = async (e) => {
         e.preventDefault();
+        const obj = {
+            ...data,
+            categories: data.categories.map(c => ({ id: c.value }))
+        }
+        console.log(obj)
 
         await axios.post(route('foods.store', {
-            ...data,
             restaurantid: auth.user.id
-        }));
+        }), obj);
         onFinish();
     };
 
@@ -29,8 +43,23 @@ export default function NewItemView({ auth, onFinish }) {
                 <input id='description' type="text" required value={data.description} onChange={e => setData('description', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
                 <label htmlFor='image_url'>Image URL:</label>
                 <input id='image_url' type="text" value={data.image_url} onChange={e => setData('image_url', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
-                <label htmlFor="price">Price:</label>
+                <label htmlFor="price">Price (Ft):</label>
                 <input id='price' type="number" required value={data.price} onChange={e => setData('price', parseInt(e.target.value))} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' min={1} />
+                <label htmlFor="categories">Categories</label>
+                <Select
+                    id="categories"
+                    isMulti
+                    value={data.categories}
+                    options={categories}
+                    className='text-gray-900'
+                    onChange={e => setData('categories', e)}
+                />
+                {/* <select className="bg-gray-700" id="categories" multiple value={data.categories} onChange={e => {
+                    console.log(e.target.value)
+                    setData('categories', e.target.value)
+                }}>
+                    {categories.map((cat, index) => <option key={index} value={cat.id}>{cat.name}</option>)}
+                </select> */}
                 <button type="submit" className='mt-4 border border-indigo-500 text-indigo-500 py-0.5 px-3 hover:bg-indigo-500 hover:text-gray-200 rounded-sm transition-colors'>Save</button>
                 <button onClick={onFinish} className='mt-1 border border-rose-600 text-rose-600 py-0.5 px-3 hover:bg-rose-600 hover:text-gray-200 rounded-sm transition-colors'>Cancel</button>
             </div>
