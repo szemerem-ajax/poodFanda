@@ -24,7 +24,6 @@ export default function NewItemView({ auth, onFinish }) {
             ...data,
             categories: data.categories.map(c => ({ id: c.value }))
         }
-        console.log(obj)
 
         await axios.post(route('foods.store', {
             restaurantid: auth.user.id
