@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('type', ['user', 'restaurant', 'courier', 'admin'])->nullable(false);
+            $table->string('address')->nullable();
+            $table->string('mobile')->nullable();
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('type');
+            $table->dropColumn('address');
+            $table->dropColumn('mobile');
         });
     }
 };
