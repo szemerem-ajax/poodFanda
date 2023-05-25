@@ -13,7 +13,8 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
-        type: 'user'
+        address: '',
+        mobile: ''
     });
 
     useEffect(() => {
@@ -101,10 +102,36 @@ export default function Register() {
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="type" value="Type" />
+                <div className='mt-4'>
+                    <InputLabel htmlFor="address" value="Address" />
 
-                    <SelectInput id="type" name="type" className="mt-1 block w-full" required value={data.type} onChange={(e) => setData('type', e.target.value)} options={['user', 'restaurant', 'courier']} />
+                    <TextInput
+                        id="address"
+                        type="text"
+                        className="mt-1 block w-full"
+                        value={data.address}
+                        onChange={(e) => setData('address', e.target.value)}
+                        required
+                        autoComplete="address"
+                    />
+
+                    <InputError className="mt-2" message={errors.address} />
+                </div>
+
+                <div className='mt-4'>
+                    <InputLabel htmlFor="mobile" value="Mobile phone" />
+
+                    <TextInput
+                        id="mobile"
+                        type="tel"
+                        className="mt-1 block w-full"
+                        value={data.mobile}
+                        onChange={(e) => setData('mobile', e.target.value)}
+                        required
+                        autoComplete="mobile"
+                    />
+
+                    <InputError className="mt-2" message={errors.mobile} />
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
