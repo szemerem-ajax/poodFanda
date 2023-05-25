@@ -22,6 +22,7 @@ Route::middleware('auth')->get('/dashboard', fn (Request $request) =>
         'user' => 'Customer/Dashboard',
         'restaurant' => 'Restaurant/Dashboard',
         'courier' => 'Courier/Dashboard',
+        'admin' => 'Admin/Dashboard',
         default => 'Landing'
     })
 )->name('dashboard');
