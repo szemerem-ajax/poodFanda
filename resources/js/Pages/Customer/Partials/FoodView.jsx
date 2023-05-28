@@ -1,4 +1,5 @@
 import PaddedSection from "@/Components/PaddedSection";
+import PrimaryButton from "@/Components/PrimaryButton";
 import { useContext } from "react";
 import { BasketContext } from "../Dashboard";
 
@@ -18,12 +19,15 @@ export default function FoodView({ auth, food }) {
                 <h3 className="text-gray-400">{food.restaurant.name}</h3>
                 <ul className="flex gap-1 my-1">
                     {food.categories.map((cat, index) =>
-                        <li key={index} className="bg-gray-100 text-gray-800 text-sm px-1 py-0.5 rounded-lg">
+                        <li key={index} className="bg-gray-900 border border-gray-300 text-gray-300 text-sm px-1 py-0.5 rounded-lg">
                             {cat.name}
                         </li>)}
                 </ul>
-                <img className="w-80 h-56 my-2 object-cover object-center" src={food.image_url ?? PlaceHolderUrl} />
-                <button onClick={order} className="bg-indigo-500 rounded-md">Order this!</button>
+                <img className="w-80 h-56 my-2 object-cover object-center border-2 border-gray-300 rounded-md" src={food.image_url ?? PlaceHolderUrl} />
+                <div className="flex items-center justify-between">
+                    <span>{food.price} Ft</span>
+                    <PrimaryButton onClick={order} className="self-center">Order this!</PrimaryButton>
+                </div>
             </PaddedSection>
         </div>
     );
