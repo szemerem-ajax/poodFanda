@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Food;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,19 +47,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = Order::create([
-            'userid' => $request['userid'],
-            'status' => 'placed',
-        ]);
-
-        $order->save();
+        $orders = array();
         foreach ($request['foods'] as $foodid) {
-            $order->foods()->attach($foodid);
+            $food = Food::find($foodid);
+            $orders[$food->restaurantid][] = $food;
         }
-        $order->update($request->all());
-        $order->save();
 
-        return new JsonResource($order);
+        $entries = array_map(function ($order) use ($request) {
+            $entry = Order::create([
+                'userid' => $request['userid'],
+                'status' => 'placed'
+            ]);
+
+            $entry->save();
+            foreach ($order as $food) {
+                $entry->foods()->attach($food);
+            }
+            $entry->save();
+
+            return $entry;
+        }, $orders);
+
+        return new JsonResource($entries);
     }
 
     /**
