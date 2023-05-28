@@ -12,9 +12,41 @@ class FoodController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $foods = Food::all()
+        $foods = Food::query();
+
+        $res = $request->query('restaurant');
+        if ($res !== null) {
+            $foods = $foods->whereHas('restaurant', function ($query) use ($res) {
+                $query->where('name', 'like', "%$res%");
+            });
+        }
+
+        $name = $request->query('name');
+        if ($name !== null) {
+            $foods = $foods->where('name', 'like', "%$name%");
+        }
+
+        $cat = $request->query('category');
+        if ($cat !== null) {
+            $foods = $foods->whereHas('categories', function ($query) use ($cat) {
+                $query->where('name', 'like', "%$cat%");
+            });
+        }
+
+        $min = $request->query('min');
+        if ($min !== null) {
+            $foods = $foods->where('price', '>=', $min);
+        }
+
+        $max = $request->query('max');
+        if ($max !== null) {
+            $foods = $foods->where('price', '<=', $max);
+        }
+
+        $foods = $foods
+            ->get()
             ->load(['restaurant', 'categories']);
 
         return JsonResource::collection($foods);
