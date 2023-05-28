@@ -32,12 +32,12 @@ function Order({ order, buttonText, statusUpdate, onChange }) {
                 {order.foods.map((item, index) => (
                     <div key={index} className="col-span-2 w-full flex px-1 text-sm justify-between">
                         <label>{item.name}</label>
-                        <p>{item.price}</p>
+                        <p>{item.price} Ft</p>
                     </div>
                 ))}
             <div className="col-span-2 my-2 w-full h-[1px] border-y border-gray-300"></div>
             <label>Total:</label>
-            <p>{order.foods.reduce((acc, curr) => acc + curr.price, 0)}</p>
+            <p>{order.foods.reduce((acc, curr) => acc + curr.price, 0)} Ft</p>
             {buttonText && statusUpdate && <button disabled={submitting} onClick={readyOrder} className="w-full disabled:cursor-not-allowed disabled:bg-indigo-800 disabled:text-gray-400 mt-2 col-span-2 bg-indigo-600 transition-colors hover:bg-indigo-500 p-1">{buttonText}</button>}
         </div>
     );
