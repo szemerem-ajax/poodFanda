@@ -14,7 +14,7 @@ export default function Basket({ auth }) {
     }, [basket]);
 
     async function order() {
-        const foods = basket.map(f => ({ id: f.id }));
+        const foods = basket.map(f => f.id);
 
         await axios.post(route('orders.store'), {
             userid: auth.user.id,
