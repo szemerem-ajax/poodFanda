@@ -47,18 +47,10 @@ Route::get('/', fn (Request $request) =>
     }
 )->name('landing');
 
-// Route::get('/', function () {
-//     return Inertia::render('Landing');
-// });
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-Route::get('/test', function () {
-    return Food::all();
 });
 
 require __DIR__.'/auth.php';
