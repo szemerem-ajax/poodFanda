@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { BasketContext } from "../Dashboard";
+import { router } from "@inertiajs/react";
 
 export default function Basket({ auth }) {
     const [basket, setBasket] = useContext(BasketContext);
@@ -20,6 +21,7 @@ export default function Basket({ auth }) {
             foods
         });
         clearBasket();
+        router.replace(route('myorders'));
     }
 
     function clearBasket() {
@@ -47,8 +49,17 @@ export default function Basket({ auth }) {
                         </div>
                     )}
                 </div>
+                <h3 className="font-semibold">Payment method:</h3>
+                <div className="flex items-center gap-1">
+                    <input id='cash' type="radio" name="payment" />
+                    <label htmlFor="cash">Cash</label>
+                </div>
+                <div className="flex items-center gap-1">
+                    <input id='online' type="radio" name="payment" />
+                    <label htmlFor="online">Online</label>
+                </div>
                 <div className="flex items-baseline w-full justify-between">
-                    <span className="text-lg font-semibold">Grand total:</span>
+                    <h2 className="text-lg font-semibold">Grand total:</h2>
                     <span className="text-right font-mono">{basket.reduce((acc, curr) => acc + curr.price, 0)}</span>
                 </div>
                 <button onClick={order} className="mt-2 w-full p-1 rounded-md bg-indigo-600 transition-colors hover:bg-indigo-500 text-gray-50">Place order</button>
