@@ -5,9 +5,11 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import OrdersView from './Partials/OrdersView';
 
-function Section({ children }) {
+const Statuses = ['placed', 'cooking', 'waiting for courier', 'delivering', 'delivered'];
+
+function Section({ children, className }) {
     return (
-        <PaddedSection className='flex flex-col gap-2'>
+        <PaddedSection className={`flex flex-col gap-2 ${className}`}>
             {children}
         </PaddedSection>
     );
@@ -26,6 +28,13 @@ export default function Dashboard({ auth }) {
         }).then(r => setOrders(r.data.data));
     }, [change]);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setChange(p => !p);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -36,11 +45,14 @@ export default function Dashboard({ auth }) {
             <h1 className="text-2xl md:text-3xl font-semibold dark:text-gray-100 mb-4 md:mb-8">Welcome {auth.user.name}!</h1>
 
             <div className="flex flex-col gap-2 md:grid md:gap-4 md:grid-cols-2">
-                <Section>
-                    <OrdersView title={'Active orders'} orders={orders.filter(o => o.status === 'cooking')} onChange={() => setChange(p => !p)} displayButton />
+                <Section className='col-span-2'>
+                    <OrdersView title={'Active orders'} orders={orders.filter(o => o.status === 'cooking')} onChange={() => setChange(p => !p)} buttonText='Done' statusUpdate='waiting for courier' />
                 </Section>
                 <Section>
-                    <OrdersView title={'Waiting for pickup'} orders={orders.filter(o => o.status === 'ready')} />
+                    <OrdersView title={'Waiting for confirmation'} orders={orders.filter(o => o.status === 'placed')} onChange={() => setChange(p => !p)} buttonText='Accept' statusUpdate='cooking' />
+                </Section>
+                <Section>
+                    <OrdersView title={'Waiting for pickup'} orders={orders.filter(o => o.status === 'waiting for courier')} />
                 </Section>
             </div>
         </AuthenticatedLayout>
