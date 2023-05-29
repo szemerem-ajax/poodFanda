@@ -28,6 +28,12 @@ function Order({ order, buttonText, statusUpdate, onChange }) {
             <p>{formatter.format(new Date(order.created_at))}</p>
             <label>Status:</label>
             <em>{order.status}</em>
+            <label>Customer name:</label>
+            <em>{order.user.name}</em>
+            <label>Customer address:</label>
+            <em>{order.user.address}</em>
+            <label>Customer phone:</label>
+            <em>{order.user.mobile}</em>
             <div className="col-span-2 my-2 w-full h-[1px] border-y border-gray-300"></div>
                 {order.foods.map((item, index) => (
                     <div key={index} className="col-span-2 w-full flex px-1 text-sm justify-between">
