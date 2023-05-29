@@ -28,6 +28,10 @@ function Order({ order, buttonText, statusUpdate, onChange }) {
             <p>{formatter.format(new Date(order.created_at))}</p>
             <label>Status:</label>
             <em>{order.status}</em>
+            <label>Restaurant:</label>
+            <em>{order.restaurant.name}</em>
+            <label>Restaurant address:</label>
+            <em>{order.restaurant.address}</em>
             <label>Customer name:</label>
             <em>{order.user.name}</em>
             <label>Customer address:</label>
