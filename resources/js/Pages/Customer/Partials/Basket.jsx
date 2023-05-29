@@ -65,7 +65,6 @@ export default function Basket({ auth }) {
                 <button onClick={order} className="mt-2 w-full p-1 rounded-md bg-indigo-600 transition-colors hover:bg-indigo-500 text-gray-50">Place order</button>
                 <button onClick={clearBasket} className="mt-2 w-full p-1 rounded-md bg-rose-600 transition-colors hover:bg-rose-500 text-gray-50">Clear basket</button>
             </div>
-            {/* {basket.map((i, idx) => <p key={idx}>{i.id}</p>)} */}
         </div>
     )
 }
