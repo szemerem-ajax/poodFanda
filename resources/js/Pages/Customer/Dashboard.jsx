@@ -87,6 +87,7 @@ export default function Dashboard({ auth }) {
 
             <BasketContext.Provider value={[basket, setBasket]}>
                 <div className="flex flex-wrap gap-2">
+                    {foods.length === 0 && <em className='text-gray-400'>No foods</em>}
                     {foods.map((food, index) => <FoodView key={index} auth={auth} food={food} />)}
                 </div>
 
