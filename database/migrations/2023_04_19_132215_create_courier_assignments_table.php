@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('courier_assignments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('orderid')->constrained('orders');
-            $table->foreignId('courierid')->constrained('users');
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreignId('courierid')->nullable()->constrained('users');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('courier_assignments');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropColumn('courierid');
+        });
     }
 };

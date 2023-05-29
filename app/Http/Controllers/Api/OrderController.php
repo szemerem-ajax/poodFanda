@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class OrderController extends Controller
 {
@@ -38,7 +39,7 @@ class OrderController extends Controller
         }
         else
         {
-            return new JsonResource([]);
+            return new JsonResource(Order::all()->load(['user', 'foods', 'foods.restaurant', 'courier']));
         }
     }
 
@@ -56,6 +57,7 @@ class OrderController extends Controller
         $entries = array_map(function ($order) use ($request) {
             $entry = Order::create([
                 'userid' => $request['userid'],
+                'payment_type' => $request['payment_type'],
                 'status' => 'placed'
             ]);
 
@@ -84,6 +86,11 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        if ($request['courierid'] !== null && $order->courierid !== null)
+        {
+            throw new ConflictHttpException;
+        }
+
         $order->update($request->all());
         return new JsonResource($order);
     }

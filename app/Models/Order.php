@@ -13,11 +13,17 @@ class Order extends Model
     protected $fillable = [
         'userid',
         'status',
+        'courierid'
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'userid', 'id');
+    }
+
+    public function courier(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'courierid', 'id');
     }
 
     public function foods(): BelongsToMany

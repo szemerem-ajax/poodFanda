@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('userid')->constrained('users');
             $table->enum('status', ['placed', 'cooking', 'waiting for courier', 'delivering', 'delivered'])->default('placed');
+            $table->enum('payment_type', ['cash', 'online']);
             $table->timestamps();
         });
 
