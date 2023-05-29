@@ -11,7 +11,7 @@ const UserLinks = [{ route: 'dashboard', title: 'Dashboard' }, { route: 'myorder
 
 const RestaurantLinks = [{ route: 'dashboard', title: 'Dashboard' }, { route: 'items', title: 'Items' }];
 
-const CourierLinks = [];
+const CourierLinks = [{ route: 'dashboard', title: 'Dashboard' }];
 
 const LinksMapping = {
     admin: AdminLinks,
