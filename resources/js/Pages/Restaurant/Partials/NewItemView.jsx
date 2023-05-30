@@ -37,13 +37,13 @@ export default function NewItemView({ auth, onFinish }) {
             <hr className="border-gray-500" />
             <div className='flex flex-col gap-2'>
                 <label htmlFor="name">Name:</label>
-                <input id='name' type="text" required value={data.name} onChange={e => setData('name', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
+                <input id='name' type="text" required value={data.name} onChange={e => setData('name', e.target.value)} className='dark:bg-gray-900 dark:text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
                 <label htmlFor="description">Description:</label>
-                <input id='description' type="text" required value={data.description} onChange={e => setData('description', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
+                <input id='description' type="text" required value={data.description} onChange={e => setData('description', e.target.value)} className='dark:bg-gray-900 dark:text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
                 <label htmlFor='image_url'>Image URL:</label>
-                <input id='image_url' type="text" value={data.image_url} onChange={e => setData('image_url', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
+                <input id='image_url' type="text" value={data.image_url} onChange={e => setData('image_url', e.target.value)} className='dark:bg-gray-900 dark:text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
                 <label htmlFor="price">Price (Ft):</label>
-                <input id='price' type="number" required value={data.price} onChange={e => setData('price', parseInt(e.target.value))} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' min={1} />
+                <input id='price' type="number" required value={data.price} onChange={e => setData('price', parseInt(e.target.value))} className='dark:bg-gray-900 dark:text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' min={1} />
                 <label htmlFor="categories">Categories</label>
                 <Select
                     id="categories"

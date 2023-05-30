@@ -19,6 +19,7 @@ class OrderController extends Controller
     {
         $userid = $request->query('userid');
         $restaurantid = $request->query('restaurantid');
+        $courierid = $request->query('courierid');
 
         if ($userid !== null)
         {
@@ -26,15 +27,25 @@ class OrderController extends Controller
                 Order::where('userid', '=', $userid)
                     ->get()
                     ->load(['foods'])
-                    ->where('foods.restaurantid', '=', $restaurantid)
             );
         }
         else if ($restaurantid !== null)
         {
             return JsonResource::collection(
                 Order::query()
+                    ->whereHas('foods', function ($query) use ($restaurantid) {
+                        return $query->where('restaurantid',  '=', $restaurantid);
+                    })
                     ->get()
                     ->load(['foods'])
+            );
+        }
+        else if ($courierid !== null)
+        {
+            return JsonResource::collection(
+                Order::where('courierid', '=', $courierid)
+                    ->get()
+                    ->load(['foods', 'foods.restaurant'])
             );
         }
         else
@@ -86,7 +97,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        if ($request['courierid'] !== null && $order->courierid !== null)
+        if ($request['courierid'] !== null && $order->courierid !== null && $order->courierid !== $request['courierid'])
         {
             throw new ConflictHttpException;
         }

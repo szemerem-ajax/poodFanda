@@ -5,6 +5,7 @@ import { router } from "@inertiajs/react";
 export default function Basket({ auth }) {
     const [basket, setBasket] = useContext(BasketContext);
     const [niceBasket, setNiceBasket] = useState({});
+    const [paymentType, setPaymentType] = useState('cash');
     const visible = basket.length > 0;
 
     const groupBy = (x,f)=>x.reduce((a,b,i)=>((a[f(b,i,x)]||=[]).push(b),a),{});
@@ -18,6 +19,7 @@ export default function Basket({ auth }) {
 
         await axios.post(route('orders.store'), {
             userid: auth.user.id,
+            payment_type: paymentType,
             foods
         });
         clearBasket();
@@ -35,7 +37,7 @@ export default function Basket({ auth }) {
 
     return (
         <div className={`fixed ${visible ? 'bottom-0' : '-bottom-full'} right-4 md:right-12 transition-all duration-500 ease-in-out`}>
-            <div className="bg-indigo-950 border border-gray-400 border-b-0 p-2 px-4 rounded-t-md min-w-[200px] md:min-w-[300px]">
+            <div className="bg-indigo-950 border border-gray-400 border-b-0 p-2 px-4 rounded-t-md min-w-[200px] md:min-w-[300px] text-gray-200 dark:text-gray-800">
                 <h1 className="text-center text-xl font-medium text-gray-200">Basket</h1>
                 <div className="flex flex-col items-center p-2">
                     {Object.keys(niceBasket).map((key, index) =>
@@ -51,11 +53,11 @@ export default function Basket({ auth }) {
                 </div>
                 <h3 className="font-semibold">Payment method:</h3>
                 <div className="flex items-center gap-1">
-                    <input id='cash' type="radio" name="payment" />
+                    <input id='cash' type="radio" name="payment" checked={paymentType === 'cash'} onChange={() => setPaymentType('cash')} />
                     <label htmlFor="cash">Cash</label>
                 </div>
                 <div className="flex items-center gap-1">
-                    <input id='online' type="radio" name="payment" />
+                    <input id='online' type="radio" name="payment" checked={paymentType === 'online'} onChange={() => setPaymentType('online')} />
                     <label htmlFor="online">Online</label>
                 </div>
                 <div className="flex items-baseline w-full justify-between">

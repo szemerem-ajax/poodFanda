@@ -18,7 +18,7 @@ export default function Dashboard({ auth }) {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        axios.get(route('orders.index')).then(r => setOrders(r.data.data));
+        axios.get(route('orders.index'), { courierid: auth.user.id }).then(r => setOrders(r.data.data));
     }, [change]);
 
     useEffect(() => {
@@ -39,7 +39,7 @@ export default function Dashboard({ auth }) {
 
             <div className="flex flex-col gap-2 md:grid md:gap-4 md:grid-cols-2">
                 <Section>
-                    <OrdersView title={'Active orders'} orders={orders.filter(o => o.status === 'delivering')} onChange={() => setChange(p => !p)} buttonText='Done' statusUpdate={{ status: 'delivered' }} />
+                    <OrdersView title={'Active orders'} orders={orders.filter(o => o.status === 'delivering' && o.courierid === auth.user.id)} onChange={() => setChange(p => !p)} buttonText='Done' statusUpdate={{ status: 'delivered' }} />
                 </Section>
                 <Section>
                     <OrdersView title={'Waiting for pickup'} orders={orders.filter(o => o.status === 'waiting for courier')} onChange={() => setChange(p => !p)} buttonText='Pickup' statusUpdate={{ status: 'delivering', courierid: auth.user.id }} />

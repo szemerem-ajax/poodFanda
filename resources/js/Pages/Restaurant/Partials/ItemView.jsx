@@ -26,7 +26,7 @@ export default function Item({ item, onDidChange }) {
                 <h1 className='text-lg font-semibold'>{item.name}</h1>
                 <div className='flex flex-col gap-1'>
                     <label>Description:</label>
-                    <p className='bg-gray-900 px-2 py-1 border border-gray-500 rounded-md max-w-prose'>{item.description}</p>
+                    <p className='px-2 py-1 border border-gray-500 rounded-md max-w-prose'>{item.description}</p>
                     <div className="flex justify-between">
                         <label>Price:</label>
                         <p className='text-right font-mono italic'>{item.price} Ft</p>
@@ -84,13 +84,13 @@ function EditItem({ item, onCancel, onDidChange }) {
             <h1 className="text-2xl font-bold">Editing {item.name}</h1>
             <hr className="border-gray-500" />
             <label htmlFor='name'>Name:</label>
-            <input id='name' type="text" required value={data.name} onChange={e => setData('name', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
+            <input id='name' type="text" required value={data.name} onChange={e => setData('name', e.target.value)} className='dark:bg-gray-900 dark:text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
             <label htmlFor='description'>Description:</label>
-            <input id='description' type="text" required value={data.description} onChange={e => setData('description', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
+            <input id='description' type="text" required value={data.description} onChange={e => setData('description', e.target.value)} className='dark:bg-gray-900 dark:text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
             <label htmlFor='image_url'>Image URL:</label>
-            <input id='image_url' type="text" value={data.image_url} onChange={e => setData('image_url', e.target.value)} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
+            <input id='image_url' type="text" value={data.image_url} onChange={e => setData('image_url', e.target.value)} className='dark:bg-gray-900 dark:text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' minLength={4} />
             <label htmlFor='price'>Price (ft):</label>
-            <input id='price' type="number" required value={data.price} onChange={e => setData('price', parseInt(e.target.value))} className='bg-gray-900 text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' min={1} />
+            <input id='price' type="number" required value={data.price} onChange={e => setData('price', parseInt(e.target.value))} className='dark:bg-gray-900 dark:text-gray-200 border border-gray-500 rounded-md focus:border-indigo-500 transition-colors' min={1} />
             <label htmlFor="categories">Categories</label>
             <Select
                 id="categories"

@@ -15,9 +15,9 @@ td {
 
 th,
 tr:nth-child(odd) {
-    @apply bg-indigo-950;
+    @apply bg-indigo-400 dark:bg-indigo-950;
 }
 
 tr:nth-child(odd) {
-    @apply bg-gray-800;
+    @apply bg-gray-400 dark:bg-gray-800;
 }

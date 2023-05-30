@@ -26,7 +26,7 @@ export default function Dashboard({ auth }) {
 
             <table className="table-auto w-full border-collapse">
                 <thead>
-                    <tr className="border-b-2 border-gray-300">
+                    <tr className="border-b-2 border-gray-800 dark:border-gray-300">
                         <th>Name</th>
                         <th>Email</th>
                         <th>Address</th>

@@ -19,7 +19,7 @@ export default function FoodView({ auth, food }) {
                 <h3 className="text-gray-400">{food.restaurant.name}</h3>
                 <ul className="flex gap-1 my-1">
                     {food.categories.map((cat, index) =>
-                        <li key={index} className="bg-gray-900 border border-gray-300 text-gray-300 text-sm px-1 py-0.5 rounded-lg">
+                        <li key={index} className="bg-gray-300 dark:bg-gray-900 border border-gray-900 dark:border-gray-300 text-gray-900 dark:text-gray-300 text-sm px-1 py-0.5 rounded-lg">
                             {cat.name}
                         </li>)}
                 </ul>

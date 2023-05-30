@@ -11,6 +11,7 @@ export default function Items({ auth }) {
     const [foods, setFoods] = useState([]);
     const [change, setChange] = useState(false);
     const [adding, setAdding] = useState(false);
+    console.log(auth.user.id)
 
     useEffect(() => {
         setChange(p => !p);
