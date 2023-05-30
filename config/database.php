@@ -58,9 +58,14 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+            'sslmode' => env('APP_ENV') === "production"
+                ? env('DB_SSLMODE', 'require')
+                : 'prefer',
+            'options' => env('APP_ENV') === "production"
+                ? (extension_loaded('pdo_mysql') ? array_filter([
+                    PDO::MYSQL_ATTR_SSL_KEY => '/ssl/DigiCertGlobalRootCA.crt.pem',
+                    ]) : []
+                ) : [],
         ],
 
         'pgsql' => [
