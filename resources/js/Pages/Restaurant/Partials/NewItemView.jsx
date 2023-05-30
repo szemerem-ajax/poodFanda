@@ -53,12 +53,6 @@ export default function NewItemView({ auth, onFinish }) {
                     className='text-gray-900'
                     onChange={e => setData('categories', e)}
                 />
-                {/* <select className="bg-gray-700" id="categories" multiple value={data.categories} onChange={e => {
-                    console.log(e.target.value)
-                    setData('categories', e.target.value)
-                }}>
-                    {categories.map((cat, index) => <option key={index} value={cat.id}>{cat.name}</option>)}
-                </select> */}
                 <button type="submit" className='mt-4 border border-indigo-500 text-indigo-500 py-0.5 px-3 hover:bg-indigo-500 hover:text-gray-200 rounded-sm transition-colors'>Save</button>
                 <button onClick={onFinish} className='mt-1 border border-rose-600 text-rose-600 py-0.5 px-3 hover:bg-rose-600 hover:text-gray-200 rounded-sm transition-colors'>Cancel</button>
             </div>

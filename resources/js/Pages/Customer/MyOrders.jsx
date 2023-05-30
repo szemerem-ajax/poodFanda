@@ -7,8 +7,6 @@ import OrderView from './Partials/OrderView';
 export default function MyOrders({ auth }) {
     const [orders, setOrders] = useState([]);
 
-    orders.forEach(o => console.table(o))
-
     useEffect(() => {
         axios.get(route('orders.index', {
             _query: {

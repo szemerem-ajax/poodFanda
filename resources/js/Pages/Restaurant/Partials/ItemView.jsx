@@ -61,8 +61,6 @@ function EditItem({ item, onCancel, onDidChange }) {
             .then(r => setCategories(r.data.data.map(c => ({ label: c.name, value: c.id }))))
     }, []);
 
-    console.log(categories)
-
     const submit = async (e) => {
         e.preventDefault();
 
