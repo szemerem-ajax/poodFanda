@@ -12,18 +12,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    public function is_user(): bool {
-        return $this->type === 'user';
-    }
-
-    public function is_restaurant(): bool {
-        return $this->type === 'restaurant';
-    }
-
-    public function is_courier(): bool {
-        return $this->type === 'restaurant';
-    }
-
     /**
      * The attributes that are mass assignable.
      *

@@ -21,8 +21,8 @@ return new class extends Migration
 
         Schema::create('category_food', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Food::class);
-            $table->foreignIdFor(Category::class);
+            $table->foreignIdFor(Food::class)->constrained('foods');
+            $table->foreignIdFor(Category::class)->constrained('categories');
             $table->timestamps();
         });
     }
